@@ -78,9 +78,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # --- CORS & CSRF ---
+CORS_ALLOWED_ORIGINS = [
+    "https://football-ecommerce.onrender.com",
+    "http://localhost:5173",
+]
+CORS_ALLOW_CREDENTIALS = True
+# 2. CORS_ALLOW_CREDENTIALS ഉറപ്പായും True ആയിരിക്കണം
 CORS_ALLOW_ALL_ORIGINS = True # ടെസ്റ്റിംഗിന് വേണ്ടി True നൽകുന്നു, പിന്നീട് മാറ്റാം
 CSRF_TRUSTED_ORIGINS = [
     "https://football-ecommerce.onrender.com",
+    "https://ecommerce-project-backend-wm1z.onrender.com",
     "http://localhost:5173",
     "http://localhost:5174",
 ]
