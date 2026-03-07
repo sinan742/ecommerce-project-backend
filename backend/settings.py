@@ -80,7 +80,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # --- CORS & CSRF ---
 CORS_ALLOW_ALL_ORIGINS = True # ടെസ്റ്റിംഗിന് വേണ്ടി True നൽകുന്നു, പിന്നീട് മാറ്റാം
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com",
+    "https://football-ecommerce.onrender.com",
     "http://localhost:5173",
     "http://localhost:5174",
 ]
