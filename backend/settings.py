@@ -127,8 +127,3 @@ TEMPLATES = [
     },
 ]
 
-# താൽക്കാലികമായി മാത്രം (ഒരിക്കൽ യൂസർ ക്രിയേറ്റ് ആയിക്കഴിഞ്ഞാൽ ഇത് നീക്കം ചെയ്യണം)
-from django.contrib.auth import get_user_model
-User = get_user_model()
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@example.com', '123456')
