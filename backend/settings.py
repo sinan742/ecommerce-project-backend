@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles', # ഇത് ഇവിടെ തന്നെ വേണം
+    'django.contrib.staticfiles', 
     'cloudinary',                
     'rest_framework',
     'corsheaders',
@@ -51,7 +51,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dnbgw6a7q',
     'API_KEY': '627265313488338',
-    'API_SECRET': '**********'
+    'API_SECRET': 'zyycCIQxCeigDi2ngvoY2CuoEA4'
 }
 
 # --- MIDDLEWARE ---
