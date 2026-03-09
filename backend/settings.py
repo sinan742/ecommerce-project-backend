@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*', '.onrender.com', 'localhost', '127.0.0.1']
 
 # --- APPS ---
 INSTALLED_APPS = [
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
