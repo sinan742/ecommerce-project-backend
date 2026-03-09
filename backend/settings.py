@@ -35,9 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.staticfiles', # ഇത് ഓൾറെഡി ഉണ്ടാകും
-    'cloudinary_storage',         # ഇത് രണ്ടാമത് ചേർക്കുക
+    'cloudinary_storage',         # 1. ഇത് ആദ്യം വരണം
+    'django.contrib.staticfiles', # 2. ഇത് രണ്ടാമത് (ഒരു തവണ മാത്രം!)
     'cloudinary',
     'rest_framework',
     'corsheaders',
