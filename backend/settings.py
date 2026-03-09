@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.staticfiles', # ഇത് ഓൾറെഡി ഉണ്ടാകും
+    'cloudinary_storage',         # ഇത് രണ്ടാമത് ചേർക്കുക
+    'cloudinary',
     'rest_framework',
     'corsheaders',
     'accounts',
@@ -43,6 +46,14 @@ INSTALLED_APPS = [
     'order',
     'dashboard',
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnbgw6a7q',
+    'API_KEY': '627265313488338',
+    'API_SECRET': 'CLOUDINARY_URL=cloudinary://627265313488338:**********@dnbgw6a7q'
+}
 
 # --- MIDDLEWARE ---
 MIDDLEWARE = [
