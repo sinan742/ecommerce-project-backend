@@ -30,14 +30,14 @@ ALLOWED_HOSTS = ['*', '.onrender.com', 'localhost', '127.0.0.1']
 
 # --- APPS ---
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'cloudinary_storage',         
+    'django.contrib.staticfiles', 
+    'django.contrib.admin',       
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',         # 1. ഇത് ആദ്യം വരണം
-    'django.contrib.staticfiles', # 2. ഇത് രണ്ടാമത് (ഒരു തവണ മാത്രം!)
-    'cloudinary',
+    'cloudinary',                 
     'rest_framework',
     'corsheaders',
     'accounts',
@@ -47,11 +47,12 @@ INSTALLED_APPS = [
 ]
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dnbgw6a7q',
     'API_KEY': '627265313488338',
-    'API_SECRET': 'CLOUDINARY_URL=cloudinary://627265313488338:**********@dnbgw6a7q'
+    'API_SECRET': '**********'
 }
 
 # --- MIDDLEWARE ---
