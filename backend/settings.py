@@ -30,14 +30,13 @@ ALLOWED_HOSTS = ['*', '.onrender.com', 'localhost', '127.0.0.1']
 
 # --- APPS ---
 INSTALLED_APPS = [
-    'cloudinary_storage',         
-    'django.contrib.staticfiles', 
-    'django.contrib.admin',       
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary',                 
+    'django.contrib.staticfiles', # ഇത് ഇവിടെ തന്നെ വേണം
+    'cloudinary',                
     'rest_framework',
     'corsheaders',
     'accounts',
@@ -77,7 +76,7 @@ DATABASES = {
 }
 
 # --- STATIC & MEDIA FILES ---
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
