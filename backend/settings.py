@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-import dj_database_url  # ഇല്ലാത്തവർ 'pip install dj-database-url' ചെയ്യുക
+import dj_database_url  
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,6 @@ SECRET_KEY = 'django-insecure-u&qz)q=)_hz3x#0*3#-3_6j4+=qpz330p@el0&df3#4fx7a1i3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# Render URL-ൽ നിന്നും ആക്സസ് ചെയ്യാൻ '*' അല്ലെങ്കിൽ നിങ്ങളുടെ Render URL നൽകുക
 ALLOWED_HOSTS = ['*', '.onrender.com', 'localhost', '127.0.0.1']
 
 # --- APPS ---
@@ -49,7 +48,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Static ഫയലുകൾക്ക് വേണ്ടി ഇത് നിർബന്ധമാണ്
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +58,6 @@ MIDDLEWARE = [
 ]
 
 # --- DATABASE ---
-# Render Postgres ഡാറ്റാബേസ് ലിങ്ക് ഉണ്ടെങ്കിൽ അത് എടുക്കും, ഇല്ലെങ്കിൽ പഴയത് ഉപയോഗിക്കും
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
@@ -69,9 +67,8 @@ DATABASES = {
 
 # --- STATIC & MEDIA FILES ---
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # ബിൽഡ് എറർ മാറാൻ ഇത് സഹായിക്കും
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
-# Render-ൽ സ്റ്റാറ്റിക് ഫയലുകൾ കൈകാര്യം ചെയ്യാൻ
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
@@ -83,8 +80,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
-# 2. CORS_ALLOW_CREDENTIALS ഉറപ്പായും True ആയിരിക്കണം
-CORS_ALLOW_ALL_ORIGINS = True # ടെസ്റ്റിംഗിന് വേണ്ടി True നൽകുന്നു, പിന്നീട് മാറ്റാം
+CORS_ALLOW_ALL_ORIGINS = True 
 CSRF_TRUSTED_ORIGINS = [
     "https://football-ecommerce.onrender.com",
     "https://ecommerce-project-backend-wm1z.onrender.com",
@@ -134,3 +130,8 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

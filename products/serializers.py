@@ -9,13 +9,13 @@ class ProductsSerializer(serializers.ModelSerializer):
         fields = '__all__' 
 
     def get_image(self, obj):
-        if obj.image:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.image.url)
-            # Default fallback for local development
-            return f"http://127.0.0.1:8000{obj.image.url}"
-        return None    
+      if obj.image:
+        request = self.context.get('request')
+        if request:
+            return request.build_absolute_uri(obj.image.url)
+        
+        return obj.image.url 
+      return None
 
 
 class CartSerializer(serializers.ModelSerializer):
