@@ -28,7 +28,6 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['*', '.onrender.com', 'localhost', '127.0.0.1']
 
-# --- APPS (Cloudinary ക്രമം ശ്രദ്ധിക്കുക) ---
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,8 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles', 
-    'cloudinary_storage',         # staticfiles-ന് താഴെ
-    'cloudinary',                 
     'rest_framework',
     'corsheaders',
     'accounts',
@@ -67,22 +64,13 @@ DATABASES = {
     )
 }
 
-# --- CLOUDINARY CONFIG ---
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dnbgw6a7q',
-    'API_KEY': '627265313488338',
-    'API_SECRET': 'zyycCIQxCeigDi2ngvoY2CuoEA4',
-}
 
-# മീഡിയ ഫയലുകൾക്ക് ക്ലൗഡിനറി സ്റ്റോറേജ്
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # --- STATIC & MEDIA FILES ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
-# CSS പ്രശ്നം ഒഴിവാക്കാൻ ലളിതമായ Whitenoise സ്റ്റോറേജ് ഉപയോഗിക്കുക
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
