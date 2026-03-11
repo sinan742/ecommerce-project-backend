@@ -1,10 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from products.models import Products
-from order.models import Order,OrderItem
+from order.models import Order, OrderItem
 
 class UserManagementSerializer(serializers.ModelSerializer):
-
     status = serializers.SerializerMethodField()
 
     class Meta:
@@ -13,23 +12,12 @@ class UserManagementSerializer(serializers.ModelSerializer):
 
     def get_status(self, obj):
         return "Active" if obj.is_active else "Blocked"
- 
-
 
 class ProductAdminSerializer(serializers.ModelSerializer):
-
-    imgUrl = serializers.SerializerMethodField()
-
     class Meta:
         model = Products
-        fields = ['id', 'name', 'brand', 'price', 'stock', 'description', 'image', 'imgUrl']
+        fields = ['id', 'name', 'brand', 'price', 'stock', 'description', 'image']
 
-    def get_imgUrl(self, obj):
-        if obj.image:
-            return f"http://127.0.0.1:8000{obj.image.url}"
-        return None
-
-    
 class OrderItemSerializer(serializers.ModelSerializer):
     imgUrl = serializers.SerializerMethodField()
 
@@ -39,12 +27,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     def get_imgUrl(self, obj):
         if obj.image:
-            return f"http://127.0.0.1:8000{obj.image.url}"
-        return None
+            return obj.image
+        return "https://via.placeholder.com/150" 
 
 class OrderAdminSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.username', read_only=True)
-    # Nested Serializer:
     items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
