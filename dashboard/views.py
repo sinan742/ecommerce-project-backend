@@ -121,22 +121,24 @@ class ProductDetailAPIView(APIView):
 # ----Admin Orders---
 
 class AdminOrdersView(APIView):
+    # അഡ്മിൻ മാത്രമേ ഈ ഡാറ്റ കാണാവൂ എന്ന് ഉറപ്പാക്കുക
+    permission_classes = [IsAdminUser]
 
-    def get(self,request):
-        orders = Order.objects.all()
-        serializer = OrderAdminSerializer(orders, many = True)
-        return Response(serializer.data)    
+    def get(self, request):
+        # പുതിയ ഓർഡറുകൾ ആദ്യം വരാൻ -id അല്ലെങ്കിൽ -created_at നൽകാം
+        orders = Order.objects.all().order_by('-id')
+        serializer = OrderAdminSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
-    
-    def patch(self,request,pk):
-        orders = get_object_or_404(Order,pk=pk)
-        serializer = OrderAdminSerializer(orders,data = request.data,partial =True)
+    def patch(self, request, pk):
+        order = get_object_or_404(Order, pk=pk)
+        serializer = OrderAdminSerializer(order, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            serializer.save() # ഇവിടെ സിഗ്നൽ വർക്ക് ആവുകയും മെയിൽ പോവുകയും ചെയ്യും
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self,request,pk):
-        orders = get_object_or_404(Order,pk=pk)
-        orders.delete()
+    def delete(self, request, pk):
+        order = get_object_or_404(Order, pk=pk)
+        order.delete()
         return Response({"message": "Order permanently deleted"}, status=status.HTTP_204_NO_CONTENT)
