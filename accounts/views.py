@@ -9,34 +9,38 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from datetime import datetime
 from rest_framework.permissions import AllowAny,IsAuthenticated
 
-class RegisterView(APIView):
+from django.conf import settings # ഇത് മുകളിൽ ഇമ്പോർട്ട് ചെയ്യുക
 
-    permission_classes=[AllowAny]
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
     
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            # 1. Save user but keep is_active = False (Red X in Admin)
             user = serializer.save()
-            user.is_active = False
+            user.is_active = False # OTP വെരിഫൈ ചെയ്യുന്നത് വരെ ആക്ടീവ് അല്ല
             user.save()
 
-            # 2. Create Profile and Generate OTP
             profile, created = Profile.objects.get_or_create(user=user)
             profile.generate_otp()
 
-            # 3. Send Email
-            send_mail(
-                'Your Verification Code',
-                f'Your OTP code is {profile.otp}',
-                'your-email@gmail.com',  
-                [user.email],
-                fail_silently=True,
-            )
+            # --- ഇമെയിൽ അയക്കുന്ന ഭാഗം ---
+            try:
+                send_mail(
+                    'Your Verification Code',
+                    f'Your OTP code is {profile.otp}',
+                    settings.DEFAULT_FROM_EMAIL, # 'your-email@gmail.com' മാറ്റി ഇത് നൽകുക
+                    [user.email],
+                    fail_silently=False, # എറർ ഉണ്ടെങ്കിൽ അറിയാൻ ഇത് False ആക്കുക
+                )
+            except Exception as e:
+                print(f"Registration Email Error: {e}")
+                # ഒരുപക്ഷേ ഇമെയിൽ പോയില്ലെങ്കിലും യൂസറെ അറിയിക്കാൻ:
+                return Response({"message": "User created but email failed. Contact support."}, status=status.HTTP_201_CREATED)
 
             return Response({"message": "OTP sent to your email"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 class VerifyOTPView(APIView):
     permission_classes=[AllowAny]
 
@@ -142,26 +146,25 @@ class LogoutView(APIView):
 # forget password
 
 class ForgotPasswordView(APIView):
-
-    permission_classes=[AllowAny]
+    permission_classes = [AllowAny]
 
     def post(self, request):
         email = request.data.get('email')
         try:
             user = User.objects.get(email=email)
             profile = user.profile
-            profile.generate_otp() # generate new otp
+            profile.generate_otp()
             
             send_mail(
                 'Password Reset OTP',
                 f'Your OTP for password reset is: {profile.otp}',
-                'your-email@gmail.com',
+                settings.DEFAULT_FROM_EMAIL, # ഇവിടെയും മാറ്റുക
                 [email],
                 fail_silently=False,
             )
             return Response({"message": "OTP sent to your email"}, status=200)
         except User.DoesNotExist:
-            return Response({"error": "User with this email not found"}, status=404)    
+            return Response({"error": "User with this email not found"}, status=404)
 
 # Reset Password
 
