@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'products',
     'order',
     'dashboard',
+    'anymail',
 ]
 
 # --- MIDDLEWARE ---
@@ -102,13 +103,15 @@ SIMPLE_JWT = {
 }
 
 # --- EMAIL SETTINGS ---
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'monusinan4567@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'hdhl torb uqij lznq')
+ANYMAIL = {
+    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY", "നിങ്ങളുടെ_API_KEY_ഇവിടെ_നൽകുക"),
+}
+
+# 3. ഇമെയിൽ ബാക്കെൻഡ് മാറ്റുക
+EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
+
+# 4. വെരിഫൈഡ് ആയ സെൻഡർ ഇമെയിൽ
+DEFAULT_FROM_EMAIL = "sinan <monusinan4567@gmail.com>"
 
 ROOT_URLCONF = 'backend.urls'
 WSGI_APPLICATION = 'backend.wsgi.application'
