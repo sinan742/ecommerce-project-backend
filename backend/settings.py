@@ -104,7 +104,7 @@ SIMPLE_JWT = {
 
 # --- EMAIL SETTINGS ---
 ANYMAIL = {
-    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY", "നിങ്ങളുടെ_API_KEY_ഇവിടെ_നൽകുക"),
+    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY", "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"),
 }
 
 # 3. ഇമെയിൽ ബാക്കെൻഡ് മാറ്റുക
