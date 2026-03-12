@@ -1,10 +1,11 @@
-from django.db.models.signals import pre_save,post_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from order.models import Order
 
+# --- User Status Signal ---
 @receiver(pre_save, sender=User)
 def notify_user_status_change(sender, instance, **kwargs):
     if instance.id is None:
@@ -23,24 +24,38 @@ def notify_user_status_change(sender, instance, **kwargs):
         else:
             message = f"Hi {instance.username},\n\nYour account has been deactivated by the administrator. If you think this is a mistake, please contact support."
 
-        # Send the email
-        send_mail(
-            subject,
-            message,
-            settings.EMAIL_HOST_USER,
-            [instance.email],
-            fail_silently=True,
-        )
+        # Send the email using DEFAULT_FROM_EMAIL
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL, # പരിഷ്കരിച്ചു
+                [instance.email],
+                fail_silently=False, # എററുകൾ ലോഗ് ചെയ്യാൻ
+            )
+        except Exception as e:
+            print(f"User Status Email Error: {e}")
 
-@receiver(post_save,sender=Order)
-def send_order_status_mail(sender,instance,created,**kwargs):
+# --- Order Status Signal ---
+@receiver(post_save, sender=Order)
+def send_order_status_mail(sender, instance, created, **kwargs):
+    # ഓർഡർ ക്രിയേറ്റ് ചെയ്യുമ്പോഴല്ല, മറിച്ച് അപ്‌ഡേറ്റ് ചെയ്യുമ്പോൾ മാത്രം മെയിൽ അയക്കാൻ
     if not created:
         subject = f"Order #{instance.id} Status Updated"
         message = f"Hi {instance.user.username},\n\nYour order status has been updated to: {instance.status}.\n\nThank you for shopping with us!"
-        email_from = settings.EMAIL_HOST_USER
+        
+        # Anymail API വഴി അയക്കാൻ DEFAULT_FROM_EMAIL ആണ് സുരക്ഷിതം
+        email_from = settings.DEFAULT_FROM_EMAIL
         recipient_list = [instance.user.email]
 
         try:
-            send_mail(subject, message, email_from, recipient_list)
+            send_mail(
+                subject, 
+                message, 
+                email_from, 
+                recipient_list, 
+                fail_silently=False
+            )
+            print(f"Successfully sent status update for Order #{instance.id}")
         except Exception as e:
-            print(f" {e}")        
+            print(f"Order Status Email Error: {e}")
