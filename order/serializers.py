@@ -9,13 +9,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = ['id', 'product_name', 'quantity', 'price','image_url']
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
+    def get_imgUrl(self, obj):
         if obj.image:
-            if request:
-                return request.build_absolute_uri(obj.image.url)
+            # Cloudinary നേരിട്ട് URL നൽകുന്നതുകൊണ്ട് ഇത് മതിയാകും
             return obj.image.url 
-        return None
+        return "https://via.placeholder.com/150"
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True) # Related name 'items' 
