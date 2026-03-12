@@ -122,7 +122,6 @@ class ProductDetailAPIView(APIView):
 
 class AdminOrdersView(APIView):
     # അഡ്മിൻ മാത്രമേ ഈ ഡാറ്റ കാണാവൂ എന്ന് ഉറപ്പാക്കുക
-    permission_classes = [IsAdminUser]
 
     def get(self, request):
         # പുതിയ ഓർഡറുകൾ ആദ്യം വരാൻ -id അല്ലെങ്കിൽ -created_at നൽകാം
