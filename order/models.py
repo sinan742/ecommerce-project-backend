@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid # 🛑 Unique ID generate cheyyaan
+from products.models import Products
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
