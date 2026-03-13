@@ -111,7 +111,7 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
 
 # 4. വെരിഫൈഡ് ആയ സെൻഡർ ഇമെയിൽ
-DEFAULT_FROM_EMAIL = "sinan <monusinan4567@gmail.com>"
+DEFAULT_FROM_EMAIL = "monusinan4567@gmail.com"
 
 ROOT_URLCONF = 'backend.urls'
 WSGI_APPLICATION = 'backend.wsgi.application'
