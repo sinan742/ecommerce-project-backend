@@ -56,7 +56,6 @@ class PlaceOrderCODView(APIView):
             for item in cart_items:
                 OrderItem.objects.create(
                     order=order,
-                    product=item.product,
                     product_name=item.product.name, 
                     quantity=item.quantity,
                     price=float(item.product.price),

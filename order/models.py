@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid # 🛑 Unique ID generate cheyyaan
-from products.models import Products
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,7 +23,6 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE) 
-    product = models.ForeignKey(Products, on_delete=models.SET_NULL, null=True) 
     product_name = models.CharField(max_length=200)
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
