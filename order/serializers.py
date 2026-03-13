@@ -4,10 +4,11 @@ from .models import Order, OrderItem
 class OrderItemSerializer(serializers.ModelSerializer):
 
     # image_url = serializers.SerializerMethodField()
+    product_image = serializers.ReadOnlyField(source='product.image')
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'product_name', 'quantity', 'price']
+        fields = ['id', 'product_name', 'quantity', 'price','product_image']
 
     # def get_imgUrl(self, obj):
     #     if obj.image:
