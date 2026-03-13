@@ -26,14 +26,25 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ['id', 'product_name', 'quantity', 'price', 'imgUrl']
 
     def get_imgUrl(self, obj):
-        if obj.image:
-            return obj.image
+        # ⭐ Cloudinary URL ലഭിക്കാൻ .url നിർബന്ധമാണ്
+        try:
+            if obj.image:
+                return obj.image.url
+        except Exception:
+            pass
         return "https://via.placeholder.com/150" 
 
 class OrderAdminSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(source='user.username', read_only=True)
+    # ⭐ user ഇല്ലാത്ത അവസ്ഥ ഒഴിവാക്കാൻ SerializerMethodField ഉപയോഗിക്കുന്നതാണ് സുരക്ഷിതം
+    user_name = serializers.SerializerMethodField()
     items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
         fields = ['id', 'user_name', 'total_amount', 'is_paid', 'address', 'status', 'created_at', 'items']
+
+    def get_user_name(self, obj):
+        try:
+            return obj.user.username
+        except:
+            return "Unknown User"
