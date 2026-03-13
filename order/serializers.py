@@ -3,16 +3,16 @@ from .models import Order, OrderItem
 
 class OrderItemSerializer(serializers.ModelSerializer):
 
-    image_url = serializers.SerializerMethodField()
+    # image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'product_name', 'quantity', 'price','image_url']
+        fields = ['id', 'product_name', 'quantity', 'price']
 
-    def get_imgUrl(self, obj):
-        if obj.image:
-            return obj.image.url 
-        return "https://via.placeholder.com/150"
+    # def get_imgUrl(self, obj):
+    #     if obj.image:
+    #         return obj.image.url 
+    #     return "https://via.placeholder.com/150"
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True) # Related name 'items' 

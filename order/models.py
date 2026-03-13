@@ -26,4 +26,4 @@ class OrderItem(models.Model):
     product_name = models.CharField(max_length=200)
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
-    image = models.ImageField(upload_to='order_items/', null=True, blank=True)
+    # image = models.ImageField(upload_to='order_items/', null=True, blank=True)
