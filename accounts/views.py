@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from datetime import datetime
 from rest_framework.permissions import AllowAny,IsAuthenticated
 
-from django.conf import settings # ഇത് മുകളിൽ ഇമ്പോർട്ട് ചെയ്യുക
+from django.conf import settings 
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -18,24 +18,22 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            user.is_active = False # OTP വെരിഫൈ ചെയ്യുന്നത് വരെ ആക്ടീവ് അല്ല
+            user.is_active = False 
             user.save()
 
             profile, created = Profile.objects.get_or_create(user=user)
             profile.generate_otp()
 
-            # --- ഇമെയിൽ അയക്കുന്ന ഭാഗം ---
             try:
                 send_mail(
                     'Your Verification Code',
                     f'Your OTP code is {profile.otp}',
-                    settings.DEFAULT_FROM_EMAIL, # 'your-email@gmail.com' മാറ്റി ഇത് നൽകുക
+                    settings.DEFAULT_FROM_EMAIL, 
                     [user.email],
-                    fail_silently=False, # എറർ ഉണ്ടെങ്കിൽ അറിയാൻ ഇത് False ആക്കുക
+                    fail_silently=False, 
                 )
             except Exception as e:
                 print(f"Registration Email Error: {e}")
-                # ഒരുപക്ഷേ ഇമെയിൽ പോയില്ലെങ്കിലും യൂസറെ അറിയിക്കാൻ:
                 return Response({"message": "User created but email failed. Contact support."}, status=status.HTTP_201_CREATED)
 
             return Response({"message": "OTP sent to your email"}, status=status.HTTP_201_CREATED)
@@ -158,7 +156,7 @@ class ForgotPasswordView(APIView):
             send_mail(
                 'Password Reset OTP',
                 f'Your OTP for password reset is: {profile.otp}',
-                settings.DEFAULT_FROM_EMAIL, # ഇവിടെയും മാറ്റുക
+                settings.DEFAULT_FROM_EMAIL, 
                 [email],
                 fail_silently=False,
             )

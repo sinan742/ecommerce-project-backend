@@ -29,9 +29,9 @@ def notify_user_status_change(sender, instance, **kwargs):
             send_mail(
                 subject,
                 message,
-                settings.DEFAULT_FROM_EMAIL, # പരിഷ്കരിച്ചു
+                settings.DEFAULT_FROM_EMAIL, 
                 [instance.email],
-                fail_silently=False, # എററുകൾ ലോഗ് ചെയ്യാൻ
+                fail_silently=False, 
             )
         except Exception as e:
             print(f"User Status Email Error: {e}")
@@ -39,12 +39,10 @@ def notify_user_status_change(sender, instance, **kwargs):
 # --- Order Status Signal ---
 @receiver(post_save, sender=Order)
 def send_order_status_mail(sender, instance, created, **kwargs):
-    # ഓർഡർ ക്രിയേറ്റ് ചെയ്യുമ്പോഴല്ല, മറിച്ച് അപ്‌ഡേറ്റ് ചെയ്യുമ്പോൾ മാത്രം മെയിൽ അയക്കാൻ
     if not created:
         subject = f"Order #{instance.id} Status Updated"
         message = f"Hi {instance.user.username},\n\nYour order status has been updated to: {instance.status}.\n\nThank you for shopping with us!"
         
-        # Anymail API വഴി അയക്കാൻ DEFAULT_FROM_EMAIL ആണ് സുരക്ഷിതം
         email_from = settings.DEFAULT_FROM_EMAIL
         recipient_list = [instance.user.email]
 

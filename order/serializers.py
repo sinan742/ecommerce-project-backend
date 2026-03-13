@@ -11,7 +11,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     def get_imgUrl(self, obj):
         if obj.image:
-            # Cloudinary നേരിട്ട് URL നൽകുന്നതുകൊണ്ട് ഇത് മതിയാകും
             return obj.image.url 
         return "https://via.placeholder.com/150"
 

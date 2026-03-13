@@ -103,15 +103,14 @@ SIMPLE_JWT = {
 }
 
 # --- EMAIL SETTINGS ---
+
 ANYMAIL = {
     "BREVO_API_KEY": os.environ.get("BREVO_API_KEY"),
 }
 
-# 3. ഇമെയിൽ ബാക്കെൻഡ് മാറ്റുക
 EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
 
-# 4. വെരിഫൈഡ് ആയ സെൻഡർ ഇമെയിൽ
-DEFAULT_FROM_EMAIL = "monusinan4567@gmail.com"
+DEFAULT_FROM_EMAIL = "Beyond The Pitch <monusinan4567@gmail.com>"
 
 ROOT_URLCONF = 'backend.urls'
 WSGI_APPLICATION = 'backend.wsgi.application'

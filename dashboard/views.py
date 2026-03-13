@@ -121,11 +121,9 @@ class ProductDetailAPIView(APIView):
 # ----Admin Orders---
 
 class AdminOrdersView(APIView):
-    # അഡ്മിൻ മാത്രമേ ഈ ഡാറ്റ കാണാവൂ എന്ന് ഉറപ്പാക്കുക
     permission_classes = [IsAdminUser]
 
     def get(self, request):
-        # പുതിയ ഓർഡറുകൾ ആദ്യം വരാൻ -id അല്ലെങ്കിൽ -created_at നൽകാം
         orders = Order.objects.all().order_by('-id')
         serializer = OrderAdminSerializer(orders, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -134,7 +132,7 @@ class AdminOrdersView(APIView):
         order = get_object_or_404(Order, pk=pk)
         serializer = OrderAdminSerializer(order, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save() # ഇവിടെ സിഗ്നൽ വർക്ക് ആവുകയും മെയിൽ പോവുകയും ചെയ്യും
+            serializer.save() 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

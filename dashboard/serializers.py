@@ -26,7 +26,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ['id', 'product_name', 'quantity', 'price', 'imgUrl']
 
     def get_imgUrl(self, obj):
-        # ⭐ Cloudinary URL ലഭിക്കാൻ .url നിർബന്ധമാണ്
         try:
             if obj.image:
                 return obj.image.url
@@ -35,7 +34,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
         return "https://via.placeholder.com/150" 
 
 class OrderAdminSerializer(serializers.ModelSerializer):
-    # ⭐ user ഇല്ലാത്ത അവസ്ഥ ഒഴിവാക്കാൻ SerializerMethodField ഉപയോഗിക്കുന്നതാണ് സുരക്ഷിതം
     user_name = serializers.SerializerMethodField()
     items = OrderItemSerializer(many=True, read_only=True)
 
