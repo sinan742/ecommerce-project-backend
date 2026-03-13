@@ -22,7 +22,8 @@ class Order(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pending') 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)  
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE) 
+    product = models.ForeignKey(Products, on_delete=models.SET_NULL, null=True) 
     product_name = models.CharField(max_length=200)
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
