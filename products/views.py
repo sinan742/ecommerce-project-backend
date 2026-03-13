@@ -42,7 +42,6 @@ class CartView(APIView):
             serializer = CartSerializer(cart_items, many=True)
             return Response(serializer.data)
         
-        # English: Normal flow for the Cart page with pagination
         paginator = CartPagination()
         page = paginator.paginate_queryset(cart_items, request)
         serializer = CartSerializer(page, many=True)
