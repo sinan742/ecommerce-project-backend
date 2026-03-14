@@ -98,7 +98,7 @@ class ProductAdminAPIView(APIView):
         except Products.DoesNotExist:
             return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
             
-        serializer = ProductAdminSerializer(product, data=request.data)
+        serializer = ProductAdminSerializer(product, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -109,8 +109,7 @@ class ProductAdminAPIView(APIView):
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)    
         
-        print(serializer.errors) 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 #---PRODUCTS PUT AND DELETE---
 
