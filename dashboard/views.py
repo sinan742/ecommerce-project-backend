@@ -69,15 +69,14 @@ class UserListUpdateView(APIView):
 
 # ----PRODUCTS GET AND POST
 
-class ProductAdminAPIView(APIView):
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser 
 
-    permission_classes=[IsAdminUser]
-    parser_classes=(MultiPartParser,FormParser)
+class ProductAdminAPIView(APIView):
+    permission_classes = [IsAdminUser]
+    parser_classes = (JSONParser, MultiPartParser, FormParser) 
     
     def get(self, request):
-
         search_query = request.query_params.get('search', None)
-
         products = Products.objects.all().order_by('-id')
         if search_query:
             products = products.filter(
@@ -93,6 +92,7 @@ class ProductAdminAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
+        print(serializer.errors) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #---PRODUCTS PUT AND DELETE---
