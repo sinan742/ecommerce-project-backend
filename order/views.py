@@ -84,7 +84,7 @@ class PlaceOrderCODView(APIView):
                     message, 
                     settings.DEFAULT_FROM_EMAIL, 
                     recipient_list,
-                    fail_silently=False
+                    fail_silently=True
                 )
             except Exception as e:
                 print(f"Order Confirmation Email failed: {e}")
