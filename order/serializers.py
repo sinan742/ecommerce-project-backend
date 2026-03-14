@@ -8,7 +8,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'product_name', 'quantity', 'price','image']
+        fields = ['id', 'product_name', 'quantity', 'price','product_image']
 
     # def get_imgUrl(self, obj):
     #     if obj.image:
