@@ -59,7 +59,7 @@ class PlaceOrderCODView(APIView):
                     product_name=item.product.name, 
                     quantity=item.quantity,
                     price=float(item.product.price),
-                    product_image=item.product.image
+                    image=item.product.image
                 )
                 
                 # Reduce stock
