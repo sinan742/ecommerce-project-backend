@@ -19,19 +19,12 @@ class ProductAdminSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'brand', 'price', 'stock', 'description', 'image']
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    imgUrl = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'product_name', 'quantity', 'price', 'imgUrl']
+        fields = ['id', 'product_name', 'quantity', 'price', 'image']
 
-    def get_imgUrl(self, obj):
-        try:
-            if obj.image:
-                return obj.image.url
-        except Exception:
-            pass
-        return "https://via.placeholder.com/150" 
+    
 
 class OrderAdminSerializer(serializers.ModelSerializer):
     user_name = serializers.SerializerMethodField()
